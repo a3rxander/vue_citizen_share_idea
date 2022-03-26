@@ -1,14 +1,24 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 
-import routeParticipation from '../modules/participation/router'
+import isAuthenticatedGuard from '../modules/auth/router/auth-guard'
+import isNotAuthenticatedGuard from '../modules/auth/router/auth-isnot'
+import routeAuth from '../modules/auth/router'
+import routeProposal from '../modules/proposal/router'
+import routeVote from '../modules/vote/router'
+import routeUsers from '../modules/users/router'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
-  },
+    redirect: "/auth",
+  }, 
+  {
+    path: '/redirecto',
+    name:'redirecto',
+    redirect: "/proposal",
+  }, 
   {
     path: '/about',
     name: 'About',
@@ -19,8 +29,24 @@ const routes = [
   },
   
   {
-    path: '/participation',
-    ...routeParticipation
+    path: '/auth',
+    beforeEnter: [ isNotAuthenticatedGuard ],
+    ...routeAuth
+  },
+  {
+    path: '/proposal',
+    beforeEnter: [ isAuthenticatedGuard ],
+    ...routeProposal
+  },
+  {
+    path: '/vote',
+    beforeEnter: [ isAuthenticatedGuard ],
+    ...routeVote
+  },
+  {
+    path: '/users',
+    beforeEnter: [ isAuthenticatedGuard ],
+    ...routeUsers
   },
   {path:'/:patchMatch(.*)*', component:Home}
 ]
