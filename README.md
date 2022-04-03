@@ -1,5 +1,27 @@
 # vue_citizen_share_idea
 
+## Firebase Rules
+```
+{
+  "rules":
+  {
+    "propuestas":
+    {
+      "$propuestasId":
+      {
+        "$thumbs":
+        {
+          ".read":true,".write":true,
+        },
+         ".read": "auth != null",
+         ".write":"auth != null && $propuestasId == auth.uid",
+      },
+      ".read": "auth != null",
+    }
+  }
+}
+```
+
 ## Project setup
 ```
 npm install
