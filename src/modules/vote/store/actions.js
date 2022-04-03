@@ -8,7 +8,7 @@ import proposalAPI from "../../../api/proposalApi";
 export const loadPropuestas = async ({ commit, rootState}) => {
 
     const uid= rootState.auth_storevuex.uid;
-    const { data } = await proposalAPI.get(`/propuestas/${uid}.json`)
+    const { data } = await proposalAPI.get(`/propuestas.json`)
 
     if ( !data )
     {
@@ -17,12 +17,20 @@ export const loadPropuestas = async ({ commit, rootState}) => {
     }
 
     const entries= [];
-    for (let id of Object.keys(data))
+    for (let parent of Object.keys(data))
     {
-        entries.push({
-            id,
-            ...data[id]
-        })
+        if(parent!=uid)
+        {
+            for (let id of Object.keys(data[parent]))
+            {
+                
+                entries.push({
+                    id,
+                    ...data[parent][id]
+                })
+            }
+ 
+        } 
     }
 
     commit('setPropuestas',entries)
@@ -73,3 +81,40 @@ export const deletePropuesta = async ({ commit,rootState }, id) => {
     return id
 }
  
+export const updThumbup = async ({ rootState }, entry) => { 
+
+    const uid= rootState.auth_storevuex.uid;
+    const aprobado=1;
+    const dataToSave = { aprobado }
+ 
+
+     await proposalAPI.post(`/propuestas/${entry.uid}/${entry.id}/thumbup/${uid}.json`,dataToSave )
+  
+}
+
+export const deleteThumbup = async ({   rootState }, entry) => { 
+
+    const uid= rootState.auth_storevuex.uid; 
+     await proposalAPI.delete(`/propuestas/${entry.uid}/${entry.id}/thumbup/${uid}.json`)
+  
+}
+
+
+export const updThumbdown = async ({  rootState }, entry) => { 
+
+    const uid= rootState.auth_storevuex.uid;
+    const aprobado=1;
+    const dataToSave = { aprobado }
+ 
+
+     await proposalAPI.post(`/propuestas/${entry.uid}/${entry.id}/thumbdown/${uid}.json` ,dataToSave)
+  
+}
+
+export const deleteThumbdown = async ({   rootState }, entry) => { 
+
+    const uid= rootState.auth_storevuex.uid; 
+     await proposalAPI.delete(`/propuestas/${entry.uid}/${entry.id}/thumbdown/${uid}.json`)
+  
+}
+

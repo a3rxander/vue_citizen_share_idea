@@ -4,20 +4,7 @@
 
  
   <div class="col-md-5">
-    <label for="area" class="form-label">Área:</label>
-    <select v-model="d_propuesta.v_area" class="form-select" id="area" required>
-      <option value="Ambiente">Ambiente</option> 
-      <option value="Cultura">Cultura</option> 
-      <option value="Desarrollo Agropecuario">Desarrollo Agropecuario</option> 
-      <option value="Desarrollo Laboral">Desarrollo Laboral</option> 
-      <option value="Desarrollo Social">Desarrollo Social</option> 
-      <option value="Economía">Economía</option> 
-      <option value="Educación">Educación</option> 
-      <option value="Obras Públicas">Obras Públicas</option> 
-      <option value="Ordenamiento Territorial">Ordenamiento Territorial</option> 
-      <option value="Salud">Salud</option> 
-      <option value="Seguridad Pública">Seguridad Pública</option> 
-    </select> 
+    <label for="area" class="form-label">Área: {{d_propuesta.v_area}}</label>
   </div>
   
 
@@ -36,9 +23,6 @@
   </div>
   <div class="col-4">
       <button  @click="saveThumbdown" class="btn btn-warning btn-lg" > <i class="fa fa-thumbs-down"></i> </button>
-  </div>
-  <div class="col-4">
-       <router-link :to="{name:'vote_index'}" class="btn btn-outline-info btn-lg" >Regresar</router-link>
   </div>
   </div>
  
@@ -76,27 +60,26 @@ export default {
     },
 
     methods:{
-        ...mapActions('vote_storevuex',['updatePropuesta','deletePropuesta']),
-        async saveEntry()
+        ...mapActions('vote_storevuex',['updThumbup','deleteThumbup','updThumbdown','deleteThumbdown']),
+        async saveThumbpup()
+        {
+            new Swal({ title:"Guardando...",allowOutsideClick:true,})
+            Swal.showLoading()
+ 
+            await this.deleteThumbdown(this.d_propuesta);
+            await this.updThumbup(this.d_propuesta);
+ 
+            Swal.fire('Actualizado','entrada actualizada con éxito','success')
+        },
+        async saveThumbdown()
         {
             new Swal({ title:"Guardando...",allowOutsideClick:true,})
             Swal.showLoading()
 
-            await this.updatePropuesta(this.d_propuesta);
+            await this.deleteThumbup(this.d_propuesta);
+            await this.updThumbdown(this.d_propuesta);
 
             Swal.fire('Actualizado','entrada actualizada con éxito','success')
-        },
-
-         async deleteEntry()
-        {
-            new Swal({ title:"Eliminando...",allowOutsideClick:true,})
-            Swal.showLoading()
-
-            await this.deletePropuesta(this.id);
-
-            this.$router.push({name:'vote_index'})
-
-            Swal.fire('Actualizado','entrada eliminada con éxito','success')
         },
 
         loadEntry()
