@@ -55,7 +55,7 @@
                 Admin  
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div @click="$router.push({name: 'proposal_Propuestas_show' , params: {id:item.id}})" class="text-indigo-600 hover:text-indigo-900">DIV</div>
+                <div @click="$router.push({name: 'proposal_Propuestasedit' , params: {id:item.id}})" class="text-indigo-600 hover:text-indigo-900">DIV</div>
               </td>
             </tr>
 

@@ -1,5 +1,7 @@
-<template>    
+<template>   
+<div class="container">
     <StorePublicar></StorePublicar>
+</div>
 </template>
 
 <script>

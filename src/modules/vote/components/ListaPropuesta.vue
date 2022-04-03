@@ -8,82 +8,35 @@
   A simple warning alert - check it out!
 </div>
 
-<div class="flex flex-wrap -mx-3 mb-6">
-    <div class="w-full px-3">
-      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-        Búsqueda: {{s_buscar}}
-      </label>
-      <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" v-model="s_buscar" type="text">
-      <p class="text-gray-600 text-xs italic">realizar búsqueda por nombre o apellido</p>
-    </div>
-  </div>
-
-<div class="flex flex-col">
-     {{BusquedaPropuesta}}
-  <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-      <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Name 
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Title
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Role
-              </th>
-              <th scope="col" class="relative px-6 py-3">
-                <span class="sr-only">Edit</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="item in BusquedaPropuesta" :key="item">
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="flex items-center">
-                  <div class="flex-shrink-0 h-10 w-10">
-                    <img class="h-10 w-10 rounded-full" :src="item.v_picture" alt="">
-                  </div>
-                  <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">
-                      {{item.text}}
-                    </div>
-                    <div class="text-sm text-gray-500">
-                      jane.cooper@example.com
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">{{item.v_name}}</div>
-                <div class="text-sm text-gray-500">Optimization</div>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  Active 
-                </span>
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                Admin  
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <div @click="$router.push({name: 'vote_Propuestas_show' , params: {id:item.id}})" class="text-indigo-600 hover:text-indigo-900">DIV</div>
-              </td>
-            </tr>
-
-            <!-- More people... -->
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="row">
+  <div class="mb-3">
+    <label for="exampleFormControlInput1" class="form-label">Búsqueda: {{s_buscar}}</label>
+    <input v-model="s_buscar" type="text" class="form-control" id="exampleFormControlInput1">
   </div>
 </div>
+
+<div class="table-responsive">
+  <table class="table">
+    <caption>Lista de Propuestas</caption>
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Area</th>
+      <th scope="col">Estatus</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="item in BusquedaPropuesta" :key="item">
+      <td>{{item.v_problema}}</td>
+      <td>{{item.v_area}}</td>
+      <td>{{item.v_status}}</td>
+      <td><button  @click="$router.push({name: 'vote_propuesta_show' , params: {id:item.id}})" class="btn btn-outline-info">Ver</button></td>
+    </tr>
+  </tbody>
+  </table>
+</div>
+ 
 </template>
 
 <script>
